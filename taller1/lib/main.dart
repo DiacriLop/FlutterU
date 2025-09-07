@@ -83,14 +83,14 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.network(
-                  'https://flutter.dev/images/flutter-logo-sharing.png',
+                  'https://i.blogs.es/8256d5/gpu-openai-chatgpt/500_333.jpeg',
                   width: 80,
                   height: 80,
                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.error, size: 80),
                 ),
                 const SizedBox(width: 16),
                 Image.asset(
-                  'assets/logo.png', // Debes agregar esta imagen en assets y declararla en pubspec.yaml.
+                  'assets/images/si.jpeg', // se agrega esta imagen en assets y declararla en pubspec.yaml.
                   width: 80,
                   height: 80,
                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.error, size: 80),
@@ -136,8 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               alignment: Alignment.center,
               children: [
                 Image.network(
-                  // Imagen de pollitos, URL válida y formato compatible
-                  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+                  'https://revistaclevel.com/sites/default/files/styles/wide/public/ChatGPT%20Image%2029%20mar%202025%2C%2005_37_43%20p.m..jpg',
                   width: 200,
                   height: 120,
                   fit: BoxFit.cover,
@@ -154,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 120,
                   child: const Center(
                     child: Text(
-                      'Texto sobre imagen',
+                      'Codigo 230222003',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
