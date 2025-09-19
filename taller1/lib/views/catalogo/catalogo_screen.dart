@@ -75,6 +75,33 @@ class CatalogoScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
+              // ✅ Widget adicional: Card de oferta
+              Card(
+                color: Colors.orange.shade100,
+                elevation: 3,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.local_offer, color: Colors.orange),
+                      SizedBox(width: 8),
+                      Text(
+                        "¡Oferta especial del día!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
               // ✅ TabBarView con GridView en cada tab
               Expanded(
                 child: TabBarView(
@@ -166,8 +193,6 @@ class CatalogoScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 
 
