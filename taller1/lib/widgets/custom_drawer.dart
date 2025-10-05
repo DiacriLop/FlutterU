@@ -1,76 +1,129 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(
-                context,
-              ).colorScheme.primaryContainer, 
-            ),
-            child: const Text(
-              'Menú',
-              style: TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255), // Texto blanco para contrastar con el color primario
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.primary,
+                  Theme.of(context).colorScheme.primaryContainer,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              textAlign: TextAlign.center,
+            ),
+            child: const Center(
+              child: Text(
+                'Menú Principal',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+              ),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Inicio'),
-            onTap: () {
-              //context.go('/'); // Navega a la ruta principal
-              //Reemplaza la ruta actual en la pila de navegación.
-              //No permite volver atrás automáticamente, ya que no agrega la nueva ruta a la pila.
-              //Útil para navegación sin historial, como en barra de navegación o cambiar de pestañas.
-              context.go('/'); // Navega a la ruta principal
-              Navigator.pop(context); // Cierra el drawer
-            },
+          Expanded(
+            child: ListView(
+              children: [
+                _drawerItem(
+                  context,
+                  icon: Icons.home,
+                  text: 'Inicio',
+                  onTap: () {
+                    context.go('/');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
+                  icon: Icons.checkroom,
+                  text: 'Catálogo',
+                  onTap: () {
+                    context.go('/catalogo');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
+                  icon: Icons.person,
+                  text: 'Perfil',
+                  onTap: () {
+                    context.go('/perfil');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
+                  icon: Icons.loop,
+                  text: 'Ciclo de Vida',
+                  onTap: () {
+                    context.go('/ciclo_vida');
+                    Navigator.pop(context);
+                  },
+                ),
+                const Divider(),
+                _drawerItem(
+                  context,
+                  icon: Icons.input,
+                  text: 'Future',
+                  onTap: () {
+                    context.go('/future');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
+                  icon: Icons.timer,
+                  text: 'Timer',
+                  onTap: () {
+                    context.go('/timer');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
+                  icon: Icons.memory,
+                  text: 'Isolate',
+                  onTap: () {
+                    context.go('/isolate');
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
-          ListTile(
-            leading: const Icon(Icons.checkroom),
-            title: const Text('Catalogo'),
-            onTap: () {
-    // Navega usando el nombre de la ruta
-    // Es más seguro porque si cambias el path, el name se mantiene
-            context.goNamed('catalogo'); 
-            Navigator.pop(context); // Cierra el Drawer
-            },
-        ),
-
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Perfil'),
-            onTap: () {
-              //context.replace(String route)
-              //Similar a go(), pero en este caso reemplaza la ruta actual sin eliminar el historial anterior.
-              //Útil si quieres evitar que el usuario regrese a la pantalla anterior
-              //pero manteniendo la posibilidad de navegar hacia otras rutas en la pila
-              context.replace('/perfil'); // Navega a la pantalla de perfil
-              Navigator.pop(context); // Cierra el drawer
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.loop),
-            title: const Text('Ciclo de Vida'),
-            onTap: () {
-              context.go('/ciclo_vida');
-            },
+          const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              '© 2025 Taller Electiva',
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _drawerItem(BuildContext context,
+      {required IconData icon, required String text, required VoidCallback onTap}) {
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+      title: Text(
+        text,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+      ),
+      onTap: onTap,
+      hoverColor: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
     );
   }
 }
