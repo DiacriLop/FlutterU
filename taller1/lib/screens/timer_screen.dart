@@ -13,21 +13,18 @@ class _TimerScreenState extends State<TimerScreen> {
   int _seconds = 0;
   Timer? _timer;
   bool _isRunning = false;
-  bool _disposed = false; // Nuevo flag
 
-  /// Inicia el cronómetro
+  /// Inicia o reanuda el cronómetro
   void _start() {
-    if (_timer != null) return; // evitar múltiples timers
+    if (_timer != null) return; // evita múltiples timers
     setState(() => _isRunning = true);
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_disposed) {
-        timer.cancel();
+      if (!mounted) {
+        timer.cancel(); // seguridad extra
         return;
       }
-      if (mounted) {
-        setState(() => _seconds++);
-      }
+      setState(() => _seconds++);
     });
   }
 
@@ -38,9 +35,9 @@ class _TimerScreenState extends State<TimerScreen> {
     if (mounted) setState(() => _isRunning = false);
   }
 
-  /// Reanuda si estaba en pausa
+  /// Reanuda el cronómetro
   void _resume() {
-    if (_isRunning || _timer != null) return;
+    if (_isRunning || _timer != null || _seconds == 0) return;
     _start();
   }
 
@@ -50,16 +47,15 @@ class _TimerScreenState extends State<TimerScreen> {
     if (mounted) setState(() => _seconds = 0);
   }
 
-  /// Navega al menú principal de forma segura
+  /// Navega al Home cancelando el cronómetro
   void _goToHome(BuildContext context) {
-    _pause(); // Cancela el timer antes de navegar
+    _pause();
     context.go('/');
   }
 
   @override
   void dispose() {
-    _disposed = true;
-    _pause(); // limpiar siempre el timer
+    _timer?.cancel();
     super.dispose();
   }
 
