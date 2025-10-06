@@ -276,28 +276,29 @@ Simulación de consulta asíncrona con **Future/async/await**.
 
 <p align="center">  
   <img width="305" height="654" alt="Future Loading" src="https://github.com/user-attachments/assets/272ba1d5-a774-4343-b030-96618009f71f" />  
-  <img width="306" height="646" alt="Future Success" src="https://github.com/user-attachments/assets/5b10fbea-e9c4-49e2-92d0-325f696d8b84" />  
+  <img width="306" height="646" alt="Future Success" src="https://github.com/user-attachments/assets/5b10fbea-e9c4-49e2-92d0-325f696d8b84" /> 
+  <img width="320" height="654" alt="TimerScreen" src="https://github.com/user-attachments/assets/61aaa70e-65f1-4efc-add3-328cb9a23083" />  
 </p>  
 
 ---
 
 ### ⌚ **TimerScreen**
 
-Cronómetro con controles: **Iniciar, Pausar, Reanudar y Reiniciar**.
-
 <p align="center">  
-  <img width="320" height="654" alt="TimerScreen" src="https://github.com/user-attachments/assets/61aaa70e-65f1-4efc-add3-328cb9a23083" />  
+  <img width="236" height="476" alt="IsolateScreen" src="https://github.com/user-attachments/assets/04d7c444-518e-4297-96bd-8a48e09b753b" />  
 </p>  
+
 
 ---
 
 ### ⚙️ **IsolateScreen**
 
 Ejecución de una tarea pesada en segundo plano con **Isolate**, mostrando progreso y resultado final.
-
 <p align="center">  
-  <img width="236" height="476" alt="IsolateScreen" src="https://github.com/user-attachments/assets/04d7c444-518e-4297-96bd-8a48e09b753b" />  
+  <img width="921" height="478" alt="image" src="https://github.com/user-attachments/assets/c5e900c1-36f9-4a34-a6b3-03709696782e" /> 
 </p>  
+
+
 
 ---
 
