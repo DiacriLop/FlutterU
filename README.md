@@ -173,6 +173,216 @@ La pantalla **CicloVidaScreen** evidencia el ciclo de vida de un widget con esta
 
 
 ---
+# 📝 Taller 3 – Asincronía, Timer e Isolates en Flutter
+
+---
+
+## 📌 Descripción
+
+Este taller tiene como objetivo aplicar conceptos de **programación asíncrona en Flutter**, utilizando:
+
+* **Future y async/await** → para manejar procesos asíncronos sin bloquear la UI.
+* **Timer** → para implementar un cronómetro con inicio, pausa, reanudación y reinicio.
+* **Isolate** → para ejecutar tareas pesadas en segundo plano sin afectar la interfaz.
+
+Además, se emplea **GitFlow** para la correcta gestión de versiones del proyecto.
+
+---
+
+## 🎯 Objetivos de aprendizaje
+
+* Comprender y evidenciar el uso de **Future, async y await**.
+* Implementar un **cronómetro funcional** con Timer.
+* Ejecutar procesos pesados usando **Isolate**, comunicando progreso y resultados a la UI.
+* Aplicar un flujo de trabajo estructurado con **GitFlow**:
+  `feature/taller_segundo_plano → dev → main`.
+
+---
+
+## ⚡ Funcionalidades implementadas
+
+### 1️⃣ Asincronía con Future / async / await
+
+* Simulación de consulta de datos con `Future.delayed`.
+* UI con estados: **Cargando… / Éxito / Error**.
+* Mensajes en consola para evidenciar el orden de ejecución.
+* Catálogo de ítems en cuadrícula tras la carga exitosa.
+
+### 2️⃣ Timer – Cronómetro
+
+* Funciones: **Iniciar, Pausar, Reanudar y Reiniciar**.
+* Actualización del tiempo cada segundo.
+* Colores e íconos dinámicos para reflejar el estado.
+* Liberación de recursos al pausar o salir de la vista.
+
+### 3️⃣ Isolate – Proceso pesado
+
+* Implementación de una **suma iterativa grande (CPU-bound)**.
+* Ejecución en **Isolate** para no bloquear la UI.
+* Comunicación de progreso en **%** hacia la interfaz.
+* Resultado final + tiempo total de ejecución.
+* **Barra de progreso creativa** (rojo → naranja → verde).
+
+---
+
+## 🖼️ Flujo de pantallas
+
+### 🏠 HomeScreen
+
+* Acceso a cada funcionalidad: **Future**, **Timer** e **Isolate**.
+
+### ⏳ FutureScreen
+
+* Pantalla con consulta simulada asíncrona.
+* Estados de carga, éxito o error.
+* Catálogo con **GridView**.
+
+### ⌚ TimerScreen
+
+* Cronómetro con botones de control: **Iniciar, Pausar, Reanudar, Reiniciar**.
+* Visualización del tiempo transcurrido.
+
+### ⚙️ IsolateScreen
+
+* Ejecución de tarea pesada en segundo plano.
+* Progreso dinámico y resultado final.
+
+---
+
+## 📷 Espacio para capturas
+
+## 📷 Capturas de la aplicación
+
+Las siguientes imágenes muestran la evidencia visual del **Taller 3 – Asincronía, Timer e Isolates en Flutter**, organizadas por pantalla y funcionalidad.
+
+---
+
+### 🏠 **Pantalla principal – HomeScreen**
+
+Acceso a cada funcionalidad: **Future**, **Timer** e **Isolate**.
+
+<p align="center">  
+  <img width="327" height="651" alt="HomeScreen" src="https://github.com/user-attachments/assets/6a7d5721-ed31-420e-a043-89d3f8863afa" />  
+</p>  
+
+---
+
+### ⏳ **FutureScreen**
+
+Simulación de consulta asíncrona con **Future/async/await**.
+
+* Estado **Cargando…**
+* Estado **Éxito** con catálogo en cuadrícula.
+
+<p align="center">  
+  <img width="305" height="654" alt="Future Loading" src="https://github.com/user-attachments/assets/272ba1d5-a774-4343-b030-96618009f71f" />  
+  <img width="306" height="646" alt="Future Success" src="https://github.com/user-attachments/assets/5b10fbea-e9c4-49e2-92d0-325f696d8b84" />  
+</p>  
+
+---
+
+### ⌚ **TimerScreen**
+
+Cronómetro con controles: **Iniciar, Pausar, Reanudar y Reiniciar**.
+
+<p align="center">  
+  <img width="320" height="654" alt="TimerScreen" src="https://github.com/user-attachments/assets/61aaa70e-65f1-4efc-add3-328cb9a23083" />  
+</p>  
+
+---
+
+### ⚙️ **IsolateScreen**
+
+Ejecución de una tarea pesada en segundo plano con **Isolate**, mostrando progreso y resultado final.
+
+<p align="center">  
+  <img width="236" height="476" alt="IsolateScreen" src="https://github.com/user-attachments/assets/04d7c444-518e-4297-96bd-8a48e09b753b" />  
+</p>  
+
+---
+
+
+## 📊 Diagrama de flujo de navegación
+
+
+👉 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/49b5ecf0-e87a-4c59-97ce-ed78b94210e6" />
+
+
+---
+
+## 🚀 Pasos para ejecutar
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone https://github.com/DiacriLop/FlutterU.git
+   ```
+
+2. **Entrar al directorio**
+
+   ```bash
+   cd FlutterU
+   ```
+
+3. **Cambiar a la rama principal**
+
+   ```bash
+   git checkout main
+   ```
+
+4. **Instalar dependencias**
+
+   ```bash
+   flutter pub get
+   ```
+
+5. **Verificar assets en pubspec.yaml**
+
+6. **Ejecutar la aplicación**
+
+   ```bash
+   flutter run
+   ```
+
+7. **(Opcional) Limpiar builds previos**
+
+   ```bash
+   flutter clean
+   flutter pub get
+   flutter run
+   ```
+
+---
+
+## 🔀 Flujo GitFlow aplicado
+
+1. **Crear rama de feature desde dev**
+
+   ```bash
+   git checkout dev
+   git pull origin dev
+   git checkout -b feature/taller_segundo_plano
+   ```
+
+2. **Subir cambios**
+
+   ```bash
+   git push origin feature/taller_segundo_plano
+   ```
+
+3. **Abrir Pull Request (PR)**
+
+   * **Base branch**: `dev`
+   * **Compare branch**: `feature/taller_segundo_plano`
+
+4. **Revisar y mergear a dev**
+
+5. **Integrar cambios a main**
+
+---
+
+
+_ __
 
 ## 👩‍🎓Datos Estudiante
 ### Diana Cristina Lopez Reyes
