@@ -99,6 +99,15 @@ class CustomDrawer extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
+                _drawerItem(
+                  context,
+                  icon: Icons.pets,
+                  text: 'Razas de Perros',
+                  onTap: () {
+                    context.go('/dogs');
+                    Navigator.pop(context);
+                  },
+                ),
               ],
             ),
           ),
