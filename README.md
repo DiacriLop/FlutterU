@@ -382,6 +382,54 @@ Ejecución de una tarea pesada en segundo plano con **Isolate**, mostrando progr
 
 ---
 
+---
+# Taller HTTP - Dog CEO API
+
+## API Utilizada
+- **API**: Dog CEO API
+- **Endpoint Principal**: `https://dog.ceo/api/breeds/list/all`
+- **Ejemplo de Respuesta**:
+```json
+{
+  "message": {
+    "affenpinscher": [],
+    "african": [],
+    "airedale": []
+  },
+  "status": "success"
+}
+```
+
+## Arquitectura
+```
+lib/
+  ├── models/
+  │   └── dog_model.dart
+  ├── services/
+  │   └── dog_service.dart
+  ├── views/
+  │   └── dog/
+  │       ├── dog_list_screen.dart
+  │       └── dog_detail_screen.dart
+```
+
+## Rutas (go_router)
+- `/dogs` - Lista de razas
+- `/dog/:breed?imageUrl=` - Detalle de raza específica
+
+## Estados y Manejo de Errores
+- Loading: CircularProgressIndicator + mensaje
+- Error: Icono rojo + mensaje + botón reintentar
+- Success: Lista de razas con imágenes
+- Network Error: SnackBar con opción de reintentar
+
+## 📷 Capturas de la aplicación
+<img width="1490" height="1023" alt="image" src="https://github.com/user-attachments/assets/14f892b8-2a87-4f84-8d23-4b954f56fab2" />
+<img width="921" height="518" alt="image" src="https://github.com/user-attachments/assets/268bff99-54a2-4fcf-8c1e-197d1379918f" />
+<img width="921" height="518" alt="image" src="https://github.com/user-attachments/assets/03c6cb97-a64d-453b-913b-fe42e9b5f389" />
+<img width="921" height="518" alt="image" src="https://github.com/user-attachments/assets/6ba1a2ac-a550-4b66-9e9a-60a9b2a09501" />
+
+
 
 _ __
 
@@ -390,3 +438,4 @@ _ __
 ### Codigo:230222003
 ### Grupo:2
 ---
+
