@@ -1,16 +1,39 @@
-# taller1
+# Taller HTTP - Dog CEO API
 
-A new Flutter project.
+## API Utilizada
+- **API**: Dog CEO API
+- **Endpoint Principal**: `https://dog.ceo/api/breeds/list/all`
+- **Ejemplo de Respuesta**:
+```json
+{
+  "message": {
+    "affenpinscher": [],
+    "african": [],
+    "airedale": []
+  },
+  "status": "success"
+}
+```
 
-## Getting Started
+## Arquitectura
+```
+lib/
+  ├── models/
+  │   └── dog_model.dart
+  ├── services/
+  │   └── dog_service.dart
+  ├── views/
+  │   └── dog/
+  │       ├── dog_list_screen.dart
+  │       └── dog_detail_screen.dart
+```
 
-This project is a starting point for a Flutter application.
+## Rutas (go_router)
+- `/dogs` - Lista de razas
+- `/dog/:breed?imageUrl=` - Detalle de raza específica
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Estados y Manejo de Errores
+- Loading: CircularProgressIndicator + mensaje
+- Error: Icono rojo + mensaje + botón reintentar
+- Success: Lista de razas con imágenes
+- Network Error: SnackBar con opción de reintentar
