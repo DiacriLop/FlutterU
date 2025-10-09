@@ -9,6 +9,8 @@ import '../views/home/home_screen.dart';
 import '../screens/future_screen.dart';
 import '../screens/timer_screen.dart';
 import '../screens/isolate_screen.dart';
+import 'package:taller1/views/dog/dog_list_screen.dart';
+import 'package:taller1/views/dog/dog_detail_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -65,6 +67,23 @@ final GoRouter appRouter = GoRouter(
       name: 'isolate',
       builder: (context, state) => const IsolateScreen(),
     ),
+    GoRoute(
+      path: '/dogs',
+      name: 'dogs',
+      builder: (context, state) => const DogListScreen(),
+    ),
+    GoRoute(
+  path: '/dog/:breed',
+  name: 'dogDetail',
+  builder: (context, state) {
+    final breed = state.pathParameters['breed']!;
+    final imageUrl = state.uri.queryParameters['imageUrl']!;
+    return DogDetailScreen(
+      breed: breed,
+      imageUrl: imageUrl,
+    );
+  },
+),
   ],
 );
 
