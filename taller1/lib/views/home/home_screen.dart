@@ -71,6 +71,35 @@ class HomeScreen extends StatelessWidget {
                 context.replace('/catalogo?promo=ConReplace');
               },
             ),
+
+            const SizedBox(height: 30),
+
+            ElevatedButton.icon(
+              icon: const Icon(Icons.campaign),
+              label: const Text("Novedades versión 1.0.2"),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Novedades 1.0.2'),
+                    content: const Text(
+                      '• Icono de la app actualizado.\n'
+                      '• Integración con Firebase App Distribution.\n'
+                      '• Ajustes para flujo de pruebas QA.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cerrar'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
