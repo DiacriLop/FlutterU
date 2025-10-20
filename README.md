@@ -457,9 +457,18 @@ lib/
   - `• Ajustes para flujo de pruebas QA.`
 - **Publicación**: adjuntar las notas en el comando de distribución (`--release-notes file.txt`) o directamente en el panel.
 
-## 📸 Capturas 
+## 📸 Capturas
 
----
+| Captura 1 | Captura 2 |
+|------------|------------|
+| <img src="https://github.com/user-attachments/assets/bfd8a4fe-037f-46cf-ae82-64ea953ad0dd" width="250"> | <img src="https://github.com/user-attachments/assets/46f3e14d-7709-48d9-bb85-ba9c1b576a09" width="250"> |
+
+| Captura 3 | Captura 4 |
+|------------|------------|
+| <img src="https://github.com/user-attachments/assets/ec4203ec-c544-432e-8218-598e67fc38ba" width="250"> | <img src="https://github.com/user-attachments/assets/cf640b5c-624c-4d7d-aaae-b0fc9872039a" width="250"> |
+
+
+
 
 ---
 
