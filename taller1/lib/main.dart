@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: AppTheme.darkTheme,
-      title: 'Tienda de ropa',
+      title: 'Tienda de ropa y jwt tokens',
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
     );
