@@ -1,36 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../models/user.dart';
+import '../services/auth_service.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
+
+  static final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.primaryContainer,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: const Center(
-              child: Text(
-                'Menú Principal',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
+          FutureBuilder<User?>(
+            future: _authService.getUser(),
+            builder: (context, snapshot) {
+              final user = snapshot.data;
+              return DrawerHeader(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.primaryContainer,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
-              ),
-            ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      radius: 30,
+                      child: Icon(Icons.person, size: 36),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      user?.name ?? 'Menú Principal',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    if (user?.email != null)
+                      Text(
+                        user!.email,
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.85),
+                          fontSize: 14,
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
           ),
           Expanded(
             child: ListView(
@@ -50,15 +77,6 @@ class CustomDrawer extends StatelessWidget {
                   text: 'Catálogo',
                   onTap: () {
                     context.go('/catalogo');
-                    Navigator.pop(context);
-                  },
-                ),
-                _drawerItem(
-                  context,
-                  icon: Icons.person,
-                  text: 'Perfil',
-                  onTap: () {
-                    context.go('/perfil');
                     Navigator.pop(context);
                   },
                 ),
@@ -106,6 +124,29 @@ class CustomDrawer extends StatelessWidget {
                   onTap: () {
                     context.go('/dogs');
                     Navigator.pop(context);
+                  },
+                ),
+                const Divider(),
+                _drawerItem(
+                  context,
+                  icon: Icons.verified_user,
+                  text: 'Ver Perfil',
+                  onTap: () {
+                    context.go('/perfil');
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.logout, color: Colors.redAccent),
+                  title: const Text(
+                    'Cerrar sesión',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  onTap: () async {
+                    final router = GoRouter.of(context);
+                    Navigator.pop(context);
+                    await _authService.logout();
+                    router.go('/login');
                   },
                 ),
               ],

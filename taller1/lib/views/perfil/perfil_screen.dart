@@ -1,6 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:taller1/services/auth_service.dart';
 import 'package:taller1/widgets/custom_drawer.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -11,114 +10,176 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
-  final TextEditingController nombreController = TextEditingController();
-  final TextEditingController correoController = TextEditingController();
+  final AuthService _authService = AuthService();
+  bool _isLoading = true;
+  String? _name;
+  String? _email;
+  String? _token;
 
   @override
-  void dispose() {
-    nombreController.dispose();
-    correoController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loadData();
   }
 
-  void goToDetalle(String metodo) {
-    final nombre = nombreController.text.trim();
-    final correo = correoController.text.trim();
+  Future<void> _loadData() async {
+    final user = await _authService.getUser();
+    final token = await _authService.getToken();
 
-    if (nombre.isEmpty || correo.isEmpty) {
-      // puedes mostrar un SnackBar o aviso
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor completa nombre y correo')),
-      );
-      return;
-    }
-
-    // encode para evitar problemas con espacios/caracteres especiales en la URL
-    final nombreEnc = Uri.encodeComponent(nombre);
-    final correoEnc = Uri.encodeComponent(correo);
-
-    if (kDebugMode) {
-      print('Navegando con método: $metodo (nombre: $nombre, correo: $correo)');
-    }
-
-    switch (metodo) {
-      case 'go':
-        context.go('/perfil-detalle/$nombreEnc/$correoEnc/$metodo');
-        break;
-      case 'push':
-        context.push('/perfil-detalle/$nombreEnc/$correoEnc/$metodo');
-        break;
-      case 'replace':
-        context.replace('/perfil-detalle/$nombreEnc/$correoEnc/$metodo');
-        break;
-    }
+    setState(() {
+      _name = user?.name;
+      _email = user?.email;
+      _token = token;
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Perfil')),
+      appBar: AppBar(title: const Text('Mi Perfil - Sistema de Parqueo')),
       drawer: const CustomDrawer(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 8),
-            const Text(
-              "Editar tu perfil",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: _loadData,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      radius: 50,
+                      child: Icon(Icons.person, size: 50),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      _name ?? 'Sin nombre',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      _email ?? 'Sin correo',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.white70,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
 
-            // Nombre
-            TextField(
-              controller: nombreController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Nombre',
-                prefixIcon: Icon(Icons.person),
+                    _DataCard(
+                      title: 'Datos Almacenados en SharedPreferences',
+                      subtitle: 'Información NO sensible',
+                      color: Colors.orange.shade700,
+                      children: [
+                        _InfoRow(label: 'ID de Usuario', value: _name != null ? '—' : 'No disponible'),
+                        _InfoRow(label: 'Nombre', value: _name ?? 'No disponible'),
+                        _InfoRow(label: 'Email', value: _email ?? 'No disponible'),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    _DataCard(
+                      title: 'Datos Almacenados en FlutterSecureStorage',
+                      subtitle: 'Información sensible (encriptada)',
+                      color: Colors.green.shade700,
+                      children: [
+                        _InfoRow(label: 'Token JWT', value: _token != null ? '●●●●●●●●' : 'No disponible'),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: const [
+                            Icon(Icons.check_circle, color: Colors.lightGreenAccent, size: 20),
+                            SizedBox(width: 8),
+                            Text('Estado de Sesión', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Spacer(),
+                            Text('Activa'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 12),
+    );
+  }
+}
 
-            // Correo
-            TextField(
-              controller: correoController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Correo',
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            const SizedBox(height: 20),
+class _DataCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final Color color;
+  final List<Widget> children;
 
-            // Botones de navegación (go, push, replace)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () => goToDetalle('go'),
-                  child: const Text("Ir con Go"),
-                ),
-                ElevatedButton(
-                  onPressed: () => goToDetalle('push'),
-                  child: const Text("Ir con Push"),
-                ),
-                ElevatedButton(
-                  onPressed: () => goToDetalle('replace'),
-                  child: const Text("Ir con Replace"),
-                ),
-              ],
-            ),
+  const _DataCard({
+    required this.title,
+    required this.subtitle,
+    required this.color,
+    required this.children,
+  });
 
-            const SizedBox(height: 20),
-            const Text(
-              'Prueba "Push" para poder volver con el botón "Volver atrás".\nUsa "Go" o "Replace" para observar que no habrá historial y será necesario usar "Ir al menú principal".',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.4), width: 1.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: TextStyle(color: color.withOpacity(0.7)),
+          ),
+          const Divider(height: 24),
+          ...children,
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _InfoRow({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          Text(
+            value,
+            style: theme.textTheme.bodyMedium,
+          ),
+        ],
       ),
     );
   }

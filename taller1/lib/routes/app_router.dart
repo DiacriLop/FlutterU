@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taller1/services/auth_service.dart';
 import 'package:taller1/views/catalogo/catalogo_screen.dart';
 import 'package:taller1/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:taller1/views/perfil/perfil_screen.dart';
@@ -11,9 +13,42 @@ import '../screens/timer_screen.dart';
 import '../screens/isolate_screen.dart';
 import 'package:taller1/views/dog/dog_list_screen.dart';
 import 'package:taller1/views/dog/dog_detail_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/register_screen.dart';
+
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter appRouter = GoRouter(
+  navigatorKey: _rootNavigatorKey,
+  initialLocation: '/login',
+  redirect: (context, state) async {
+    final authService = AuthService();
+    final isLogged = await authService.isLoggedIn();
+
+    final path = state.uri.path;
+    final loggingIn = path == '/login' || path == '/register';
+
+    if (!isLogged && !loggingIn) {
+      return '/login';
+    }
+
+    if (isLogged && loggingIn) {
+      return '/';
+    }
+
+    return null;
+  },
   routes: [
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
     GoRoute(
       path: '/',
       name: 'home',
@@ -73,17 +108,17 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const DogListScreen(),
     ),
     GoRoute(
-  path: '/dog/:breed',
-  name: 'dogDetail',
-  builder: (context, state) {
-    final breed = state.pathParameters['breed']!;
-    final imageUrl = state.uri.queryParameters['imageUrl']!;
-    return DogDetailScreen(
-      breed: breed,
-      imageUrl: imageUrl,
-    );
-  },
-),
+      path: '/dog/:breed',
+      name: 'dogDetail',
+      builder: (context, state) {
+        final breed = state.pathParameters['breed']!;
+        final imageUrl = state.uri.queryParameters['imageUrl']!;
+        return DogDetailScreen(
+          breed: breed,
+          imageUrl: imageUrl,
+        );
+      },
+    ),
   ],
 );
 
