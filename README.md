@@ -471,7 +471,138 @@ lib/
 
 
 ---
+ ---
+# 📝 Taller 2 – Autenticación JWT en Flutter (Opción B – API Pública VisionTIC)
 
+## 🎯 Objetivo
+Desarrollar un módulo de autenticación en **Flutter** que realice **login JWT** contra la API pública  
+[https://parking.visiontic.com.co/api](https://parking.visiontic.com.co/api).  
+
+El sistema debe manejar **estados (cargando / éxito / error)**, guardar información del usuario de forma segura y mostrar evidencia del almacenamiento local.
+
+---
+
+## ⚙️ Stack Tecnológico
+
+| Componente | Versión | Uso principal |
+|-------------|----------|----------------|
+| Flutter SDK | ^3.9.2 | Framework base |
+| `http` | ^1.1.0 | Consumo de la API VisionTIC |
+| `provider` | ^6.1.0 | Manejo de estado |
+| `shared_preferences` | ^2.3.2 | Almacenamiento de datos no sensibles |
+| `flutter_secure_storage` | ^9.2.2 | Almacenamiento del token JWT |
+| `go_router` | ^16.3.0 | Navegación declarativa |
+
+---
+
+## 🧭 Flujo funcional
+
+### 🔹 1. Autenticación
+- **Registro:** `/api/users`
+- **Login:** `/api/login`
+- **Perfil:** `/api/perfil`
+- **Logout:** `/api/logout`
+
+> El **token JWT** se guarda en `flutter_secure_storage`, y los **datos del usuario (nombre, email)** en `shared_preferences`.
+
+---
+
+### 🔹 2. Manejo de estado
+- Controlado con `AuthProvider` (`idle → loading → success/error`).
+- Se muestra un `CircularProgressIndicator` durante el proceso y mensajes visuales según el resultado.
+
+---
+
+### 🔹 3. Vista de Evidencia
+- Muestra:
+  - 👤 **Nombre**
+  - ✉️ **Correo**
+  - 🔒 **Estado del token**
+- Incluye botón **“Cerrar sesión”** que elimina los datos locales.  
+- Indicadores:
+  - ✅ **Token presente**
+  - ❌ **Sin token**
+
+---
+
+## 💾 Estructura del proyecto
+
+```bash
+lib/
+ ┣ models/
+ ┃ ┗ auth_response.dart
+ ┣ providers/
+ ┃ ┗ auth_provider.dart
+ ┣ services/
+ ┃ ┣ auth_service.dart
+ ┃ ┗ storage_service.dart
+ ┣ screens/
+ ┃ ┣ login_screen.dart
+ ┃ ┣ register_screen.dart
+ ┃ ┗ evidence_screen.dart
+ ┣ main.dart
+ ┗ app_router.dart
+```
+## 🔐 Endpoints usados
+Método	Endpoint	Descripción
+POST	/api/users	Registro de usuario
+POST	/api/login	Login y obtención del token JWT
+GET	/api/perfil	Perfil del usuario autenticado
+POST	/api/logout	Cierre de sesión
+
+## 🔀 Flujo GitFlow aplicado
+
+Rama base: dev
+
+Crear rama de feature:
+
+git checkout dev
+git pull origin dev
+git checkout -b feature/taller_jwt
+
+
+Confirmar cambios y subir:
+
+git add .
+git commit -m "feat(auth): implementación JWT con Flutter y API VisionTIC"
+git push -u origin feature/taller_jwt
+
+
+Abrir Pull Request: feature/taller_jwt → dev
+
+Merge a dev
+
+Integrar cambios a main
+
+## 📷 Evidencias
+
+
+✅ Registro de usuario (en Postman o app).
+
+✅ Login exitoso con token JWT.
+
+✅ Almacenamiento en shared_preferences y flutter_secure_storage.
+
+✅ Pantalla de evidencia con datos guardados.
+
+✅ Cierre de sesión limpiando datos.
+
+✅ Flujo GitFlow completo (feature/taller_jwt, dev, main).
+
+📱 Capturas
+## 📱 Capturas
+
+| Evidencia 1 | Evidencia 2 |
+|----------------|------------------|
+| <img src="https://github.com/user-attachments/assets/e36f7427-14b5-41b8-80c0-235092f3ef01" width="350"> | <img src="https://github.com/user-attachments/assets/c030de81-be4c-4b23-9467-1644a7245ce5" width="350"> |
+
+| Evidencia 3  | Evidencia 4  |
+|-----------------|------------------|
+| <img src="https://github.com/user-attachments/assets/e63e05c0-a411-43df-a824-326caf820dbd" width="350"> | <img src="https://github.com/user-attachments/assets/3870c0a1-4da7-4aea-9109-be590662b6cd" width="350"> |
+
+
+
+- - -
 _ __
 
 ## 👩‍🎓Datos Estudiante
