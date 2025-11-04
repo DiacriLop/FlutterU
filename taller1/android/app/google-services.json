@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "37053827097",
-    "project_id": "taller1corte3-29ee9",
-    "storage_bucket": "taller1corte3-29ee9.firebasestorage.app"
+    "project_number": "774210774147",
+    "project_id": "electivagrupo2-2a6ea",
+    "storage_bucket": "electivagrupo2-2a6ea.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:37053827097:android:c5a012139132be36920288",
+        "mobilesdk_app_id": "1:774210774147:android:8ea04d36bc594bc35ae7b6",
         "android_client_info": {
           "package_name": "com.example.taller1"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBlNvwz2sb5iTToHWVvRkrdUmTZtfUc7zE"
+          "current_key": "AIzaSyCuQcXbysXkj1MD_SrxUwD-f2ulsdUaqdQ"
         }
       ],
       "services": {

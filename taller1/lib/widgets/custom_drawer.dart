@@ -92,6 +92,24 @@ class CustomDrawer extends StatelessWidget {
                 const Divider(),
                 _drawerItem(
                   context,
+                  icon: Icons.cloud,
+                  text: 'Categorías Firebase',
+                  onTap: () {
+                    context.go('/categoriasFirebase');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
+                  icon: Icons.school,
+                  text: 'Universidades',
+                  onTap: () {
+                    context.go('/universidades');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
                   icon: Icons.input,
                   text: 'Future',
                   onTap: () {
