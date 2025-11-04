@@ -465,16 +465,136 @@ lib/
 
 | Captura 3 | Captura 4 |
 |------------|------------|
-| <img src="https://github.com/user-attachments/assets/ec4203ec-c544-432e-8218-598e67fc38ba" width="250"> | <img src="https://github.com/user-attachments/assets/cf640b5c-624c-4d7d-aaae-b0fc9872039a" width="250"> |
+---
 
+# 🔥 Taller 4 – Integración con Firebase
 
+## 🏫 Gestión de Universidades con Firebase
 
+Aplicación Flutter para la gestión de universidades que utiliza Firebase como backend, implementando operaciones CRUD con Firestore y autenticación de usuarios.
+
+## 🚀 Características Principales
+
+- **Autenticación** segura con Firebase Auth
+- **CRUD** completo de universidades
+- **Sincronización en tiempo real** con Firestore
+- **Validaciones** de formularios
+- **Diseño responsivo** siguiendo Material Design 3
+- **Manejo de estado** con Provider
+
+## 🛠️ Configuración Requerida
+
+- Flutter SDK (última versión estable)
+- Cuenta de Firebase
+- Dispositivo físico o emulador Android/iOS
+- Paquetes principales:
+  ```yaml
+  firebase_core: ^2.15.1
+  cloud_firestore: ^4.9.1
+  firebase_auth: ^4.8.3
+  provider: ^6.0.5
+  ```
+
+## 🔥 Configuración de Firebase
+
+1. **Crear proyecto en Firebase**
+   - Ir a [Firebase Console](https://console.firebase.google.com/)
+   - Hacer clic en "Añadir proyecto"
+   - Seguir el asistente de configuración
+
+2. **Añadir aplicación Flutter**
+   - Seleccionar el proyecto
+   - Hacer clic en el ícono de Android/iOS
+   - Seguir las instrucciones para registrar la aplicación
+   - Descargar el archivo de configuración:
+     - Android: `google-services.json` en `android/app/`
+     - iOS: `GoogleService-Info.plist` en `ios/Runner/`
+
+3. **Habilitar Autenticación**
+   - En Firebase Console, ir a "Authentication"
+   - Ir a la pestaña "Sign-in method"
+   - Habilitar "Email/Password"
+
+4. **Configurar Firestore**
+   - Crear base de datos Firestore
+   - Configurar reglas de seguridad:
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents} {
+       match /universidades/{universidad} {
+         allow read: if true;
+         allow create, update, delete: if request.auth != null;
+       }
+     }
+   }
+   ```
+
+## 🏗️ Estructura del Proyecto
+
+```
+lib/
+├── models/
+│   └── universidad.dart
+├── services/
+│   ├── auth_service.dart
+│   └── universidad_service.dart
+├── screens/
+│   ├── auth/
+│   │   ├── login_screen.dart
+│   │   └── register_screen.dart
+│   └── universidad/
+│       ├── universidad_list_screen.dart
+│       └── universidad_form_screen.dart
+└── main.dart
+```
+
+## 📱 Capturas de Pantalla
+
+| Inicio de Sesión | Lista de Universidades | Formulario |
+|-----------------|----------------------|------------|
+| ![Login]()      | ![Lista]()          | ![Form]()  |
+
+## 📊 Modelo de Datos
+
+### Colección: `universidades`
+```typescript
+{
+  "nit": string,           // Ej: "890.123.456-7"
+  "nombre": string,        // Ej: "Universidad del Valle"
+  "direccion": string,     // Ej: "Calle 13 #100-00, Cali"
+  "telefono": string,      // Ej: "+57 602 3212100"
+  "pagina_web": string,    // Ej: "https://www.univalle.edu.co"
+  "fecha_creacion": timestamp
+}
+```
+
+## 🚀 Despliegue
+
+1. **Generar APK release**
+   ```bash
+   flutter build apk --release
+   ```
+
+2. **Distribuir con Firebase App Distribution**
+   ```bash
+   firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+     --app <app-id> \
+     --groups testers
+   ```
+
+## 📝 Notas de Versión
+
+### v1.0.0
+- Versión inicial del módulo de universidades
+- Integración con Firebase Auth y Firestore
+- CRUD completo de universidades
+- Validaciones de formulario
+- Diseño responsivo
 
 ---
 
-_ __
-
-## 👩‍🎓Datos Estudiante
+## Datos Estudiante
 ### Diana Cristina Lopez Reyes
 ### Codigo:230222003
 ### Grupo:2
