@@ -12,12 +12,19 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
+    }
+
+    // Configure Java toolchain for this module
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
     }
 
     defaultConfig {

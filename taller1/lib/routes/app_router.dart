@@ -15,6 +15,8 @@ import 'package:taller1/views/dog/dog_list_screen.dart';
 import 'package:taller1/views/dog/dog_detail_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/register_screen.dart';
+import '../views/categorias_fb/categoria_fb_list_view.dart';
+import '../views/categorias_fb/categoria_fb_form_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -106,6 +108,25 @@ final GoRouter appRouter = GoRouter(
       path: '/dogs',
       name: 'dogs',
       builder: (context, state) => const DogListScreen(),
+    ),
+    //! Rutas para el manejo de Categorías (CRUD)
+    GoRoute(
+      path: '/categoriasFirebase',
+      name: 'categoriasFirebase',
+      builder: (context, state) => const CategoriaFbListView(),
+    ),
+    GoRoute(
+      path: '/categoriasfb/create',
+      name: 'categoriasfb.create',
+      builder: (context, state) => const CategoriaFbFormView(),
+    ),
+    GoRoute(
+      path: '/categoriasfb/edit/:id',
+      name: 'categoriasfb.edit',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return CategoriaFbFormView(id: id);
+      },
     ),
     GoRoute(
       path: '/dog/:breed',
