@@ -101,6 +101,15 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 _drawerItem(
                   context,
+                  icon: Icons.school,
+                  text: 'Universidades',
+                  onTap: () {
+                    context.go('/universidades');
+                    Navigator.pop(context);
+                  },
+                ),
+                _drawerItem(
+                  context,
                   icon: Icons.input,
                   text: 'Future',
                   onTap: () {
