@@ -600,9 +600,129 @@ Integrar cambios a main
 |-----------------|------------------|
 | <img src="https://github.com/user-attachments/assets/e63e05c0-a411-43df-a824-326caf820dbd" width="350"> | <img src="https://github.com/user-attachments/assets/3870c0a1-4da7-4aea-9109-be590662b6cd" width="350"> |
 
+---
+# 📝 Taller3: Integración con Firebase
+Aplicación Flutter para la gestión de universidades que utiliza Firebase como backend, implementando operaciones CRUD con Firestore y autenticación de usuarios.
+
+## 🚀 Características
+
+- **Autenticación** de usuarios con Firebase Auth
+- **CRUD** completo de universidades
+- **Tiempo real** con Firestore
+- **Validaciones** de formularios
+- **Diseño responsivo** siguiendo Material Design 3
+- **Manejo de estado** con Provider
+
+## 🛠️ Requisitos Previos
+
+- Flutter SDK (última versión estable)
+- Cuenta de Firebase
+- Android Studio / Xcode (para emuladores)
+- Dispositivo físico o emulador
+
+## 🔧 Configuración del Proyecto
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone <url-del-repositorio>
+   cd taller1
+   ```
+
+2. **Instalar dependencias**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Configurar Firebase**
+   - Crear proyecto en [Firebase Console](https://console.firebase.google.com/)
+   - Añadir una aplicación Android/iOS
+   - Descargar el archivo de configuración:
+     - Android: `google-services.json` en `android/app/`
+     - iOS: `GoogleService-Info.plist` en `ios/Runner/`
+
+4. **Configurar reglas de Firestore**
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /universidades/{universidad} {
+         allow read: if true;
+         allow create, update, delete: if request.auth != null;
+         
+         // Validaciones de esquema
+         allow create: if (
+           request.resource.data.nit is string &&
+           request.resource.data.nombre is string &&
+           request.resource.data.direccion is string &&
+           request.resource.data.telefono is string &&
+           (request.resource.data.pagina_web == null || 
+            request.resource.data.pagina_web is string)
+         );
+       }
+     }
+   }
+   ```
+
+## 🚀 Ejecutar la Aplicación
+
+```bash
+# Obtener dependencias
+flutter pub get
+
+# Ejecutar en modo desarrollo
+flutter run
+
+# Generar APK de lanzamiento
+flutter build apk --release
+```
+
+## 📱 Estructura del Proyecto
+
+```
+lib/
+├── models/          # Modelos de datos
+│   └── universidad.dart
+├── services/        # Servicios
+│   ├── auth_service.dart
+│   └── universidad_service.dart
+├── screens/         # Pantallas
+│   ├── auth/
+│   │   ├── login_screen.dart
+│   │   └── register_screen.dart
+│   └── universidad/
+│       ├── universidad_list_screen.dart
+│       └── universidad_form_screen.dart
+├── widgets/         # Componentes reutilizables
+├── utils/           # Utilidades
+└── main.dart        # Punto de entrada
+```
 
 
-- - -
+## 📊 Modelo de Datos
+
+### Colección: `universidades`
+```typescript
+{
+  "nit": string,           // Ej: "890.123.456-7"
+  "nombre": string,        // Ej: "Universidad del Valle"
+  "direccion": string,     // Ej: "Calle 13 #100-00, Cali"
+  "telefono": string,      // Ej: "+57 602 3212100"
+  "pagina_web": string,    // Ej: "https://www.univalle.edu.co"
+  "fecha_creacion": timestamp
+}
+```
+
+## 📱 Capturas de Pantalla
+
+| Lista de Universidades | Formulario |
+|----------------------|------------|
+|<img width="921" height="481" alt="image" src="https://github.com/user-attachments/assets/a0c958e4-8b62-416c-bf65-cedbf4ccbbb0" />
+  | <img width="921" height="486" alt="image" src="https://github.com/user-attachments/assets/3925f7d1-b6de-48a6-963c-e8bdeac6c5c2" />
+ |
+
+
+
+---
 _ __
 
 ## 👩‍🎓Datos Estudiante
