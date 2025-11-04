@@ -128,9 +128,13 @@ class _DataCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        // TODO: Update with non-deprecated opacity method when available
         color: color.withOpacity(0.15),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.4), width: 1.5),
+        border: Border.all(
+          color: color.withOpacity(0.4),
+          width: 1.5,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +150,7 @@ class _DataCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             subtitle,
+            // TODO: Update with non-deprecated opacity method when available
             style: TextStyle(color: color.withOpacity(0.7)),
           ),
           const Divider(height: 24),

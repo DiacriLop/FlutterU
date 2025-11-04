@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:taller1/services/auth_service.dart';
 import 'package:taller1/views/catalogo/catalogo_screen.dart';
 import 'package:taller1/views/ciclo_vida/ciclo_vida_screen.dart';
@@ -15,6 +16,12 @@ import 'package:taller1/views/dog/dog_list_screen.dart';
 import 'package:taller1/views/dog/dog_detail_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/register_screen.dart';
+import '../views/categorias_fb/categoria_fb_list_view.dart';
+import '../views/categorias_fb/categoria_fb_form_view.dart';
+import '../views/universidades/universidad_list_screen.dart';
+import '../views/universidades/universidad_form_screen.dart';
+import '../models/universidad.dart';
+import '../services/universidad_service.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -106,6 +113,60 @@ final GoRouter appRouter = GoRouter(
       path: '/dogs',
       name: 'dogs',
       builder: (context, state) => const DogListScreen(),
+    ),
+    //! Rutas para el manejo de Categorías (CRUD)
+    GoRoute(
+      path: '/categoriasfb',
+      name: 'categoriasfb',
+      builder: (context, state) => const CategoriaFbListView(),
+    ),
+    GoRoute(
+      path: '/categoriasfb/create',
+      name: 'categoriasfb.create',
+      builder: (context, state) => const CategoriaFbFormView(),
+    ),
+    GoRoute(
+      path: '/categoriasfb/edit/:id',
+      name: 'categoriasfb.edit',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return CategoriaFbFormView(id: id);
+      },
+    ),
+    // Rutas para el módulo de universidades
+    GoRoute(
+      path: '/universidades',
+      name: 'universidades',
+      builder: (context, state) => const UniversidadListScreen(),
+    ),
+    GoRoute(
+      path: '/universidades/crear',
+      name: 'universidades.crear',
+      builder: (context, state) => const UniversidadFormScreen(),
+    ),
+    GoRoute(
+      path: '/universidades/editar/:id',
+      name: 'universidades.editar',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        // Cargar la universidad por ID y pasarla al formulario
+        return FutureBuilder<Universidad?>(
+          future: context.read<UniversidadService>().getUniversidadById(id),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            if (snapshot.hasError || !snapshot.hasData) {
+              return const Scaffold(
+                body: Center(child: Text('Error al cargar la universidad')),
+              );
+            }
+            return UniversidadFormScreen(universidad: snapshot.data);
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/dog/:breed',

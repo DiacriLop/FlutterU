@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../services/dog_service.dart';
 
 class DogDetailScreen extends StatelessWidget {
   final String breed;
@@ -46,7 +45,7 @@ class DogDetailScreen extends StatelessWidget {
                     if (loadingProgress == null) return child;
                     return Container(
                       height: 300,
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      color: Theme.of(context).colorScheme.surfaceContainerHighest,
                       child: Center(
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
